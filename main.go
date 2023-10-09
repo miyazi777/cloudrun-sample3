@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"os"
 )
 
 type Hello struct {
@@ -17,6 +18,8 @@ func main() {
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(Hello{Title: "Hello", Desc: "BuildPack", Ver: "0.0.1"})
 	})
+	port := os.Getenv("PORT")
 
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Printf("Listening on %v", port)
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
